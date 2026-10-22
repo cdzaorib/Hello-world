@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "@fontsource-variable/cormorant-garamond";
+@import "@fontsource-variable/manrope";
+
+@theme {
+  --color-ivory: #f6f1ea;
+  --color-nude: #d9c5b6;
+  --color-taupe: #a88c76;
+  --color-taupe-dark: #7a604c; /* taupe escurecido p/ contraste AA em texto */
+  --color-cafe: #473a35;
+  --font-display: "Cormorant Garamond Variable", Georgia, serif;
+  --font-sans: "Manrope Variable", system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { background: var(--color-ivory); color: var(--color-cafe); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--color-nude); }
+:focus-visible { outline: 2px solid var(--color-cafe); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+.container-x { margin-inline: auto; width: 100%; max-width: 72rem; padding-inline: 1.25rem; }
+@media (min-width: 768px) { .container-x { padding-inline: 2rem; } }
