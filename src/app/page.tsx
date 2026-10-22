@@ -1,13 +1,12 @@
-import { About } from "@/components/About";
-import { Contact } from "@/components/Contact";
-import { Differentials } from "@/components/Differentials";
-import { FAQ } from "@/components/FAQ";
+import { ClickTracker } from "@/components/ClickTracker";
+import { Essence } from "@/components/Essence";
+import { Experience } from "@/components/Experience";
+import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
-import { Gallery } from "@/components/Gallery";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { Testimonials } from "@/components/Testimonials";
-import { Treatments } from "@/components/Treatments";
+import { Professionals } from "@/components/Professionals";
+import { Specialties } from "@/components/Specialties";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 export default function Home() {
@@ -16,16 +15,15 @@ export default function Home() {
       <Header />
       <main id="conteudo">
         <Hero />
-        <About />
-        <Treatments />
-        <Differentials />
-        <Gallery />
-        <Testimonials />
-        <FAQ />
-        <Contact />
+        <Specialties />
+        <Essence />
+        <Professionals />
+        <Experience />
+        <FinalCta />
       </main>
       <Footer />
       <WhatsAppFloat />
+      <ClickTracker />
     </>
   );
 }

@@ -1,32 +1,50 @@
 import Link from "next/link";
+import { MapPin } from "lucide-react";
 import { nav, site } from "@/content/site";
+import { hasWhatsapp, bookingUrl } from "@/lib/whatsapp";
 import { InstagramIcon } from "./icons";
 import { Logo } from "./Logo";
 
 export function Footer() {
+  const { neighborhood, city, state } = site.location;
   return (
-    <footer className="bg-cafe py-14 text-ivory">
+    <footer className="bg-forest py-14 text-cream">
       <div className="container-x grid gap-10 md:grid-cols-3">
         <div>
-          <Logo />
-          <p className="mt-4 max-w-xs text-sm text-ivory/70">{site.tagline}.</p>
+          <Logo size={72} />
+          <p className="mt-4 max-w-xs text-sm text-cream/75">{site.positioning}</p>
         </div>
         <nav aria-label="Rodapé">
           <ul className="space-y-2 text-sm">
             {nav.map((i) => (
-              <li key={i.href}><a href={`/${i.href}`} className="text-ivory/80 hover:text-ivory">{i.label}</a></li>
+              <li key={i.href}><a href={`/${i.href}`} className="text-cream/80 hover:text-cream">{i.label}</a></li>
             ))}
-            <li><Link href="/politica-de-privacidade" className="text-ivory/80 hover:text-ivory">Política de privacidade</Link></li>
+            <li><Link href="/politica-de-privacidade" className="text-cream/80 hover:text-cream">Aviso de privacidade</Link></li>
           </ul>
         </nav>
-        <div className="text-sm text-ivory/80">
-          <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-ivory">
-            <InstagramIcon className="size-5" /> {site.instagram.handle}
-          </a>
-          {site.email && <p className="mt-2">{site.email}</p>}
-        </div>
+        <address className="space-y-3 text-sm not-italic text-cream/85">
+          <p className="flex gap-2">
+            <MapPin aria-hidden className="mt-0.5 size-4 shrink-0" />
+            <span>
+              {site.street ? `${site.street} — ` : ""}{neighborhood}, {city}/{state}
+              {!site.street && <span className="block text-cream/60">[PENDENTE] endereço completo</span>}
+              {site.mapsLink && <a className="block underline" href={site.mapsLink} target="_blank" rel="noopener noreferrer">Ver no Google Maps</a>}
+            </span>
+          </p>
+          <p>
+            <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" data-track="instagram_click" data-track-location="footer" className="inline-flex items-center gap-2 hover:text-cream">
+              <InstagramIcon className="size-5" /> {site.instagram.handle}
+            </a>
+          </p>
+          <p>
+            <a href={bookingUrl()} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-location="footer" className="hover:text-cream">
+              {hasWhatsapp ? "WhatsApp" : "[PENDENTE] WhatsApp — por enquanto, fale pelo Instagram"}
+            </a>
+          </p>
+          {site.hours && <p>{site.hours.join(" · ")}</p>}
+        </address>
       </div>
-      <div className="container-x mt-10 border-t border-ivory/15 pt-6 text-xs text-ivory/60">
+      <div className="container-x mt-10 border-t border-cream/15 pt-6 text-xs text-cream/60">
         © {new Date().getFullYear()} {site.legal.companyName ?? site.name}.
         {site.legal.cnpj && <> CNPJ {site.legal.cnpj}.</>} Todos os direitos reservados.
       </div>

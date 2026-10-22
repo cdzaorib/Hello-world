@@ -1,19 +1,9 @@
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 
-type Props = {
-  src: string | null;
-  alt: string;
-  label: string;
-  className?: string;
-  priority?: boolean;
-  sizes?: string;
-};
+type Props = { src: string | null; alt: string; label: string; className?: string; priority?: boolean; sizes?: string };
 
-/**
- * Exibe a foto oficial quando `src` existir (arquivo em /public/images);
- * senão, mostra um placeholder claramente identificado.
- */
+/** Foto oficial quando `src` existir (em /public/images); senão, placeholder identificado como pendente. */
 export function ImageSlot({ src, alt, label, className = "", priority, sizes = "(min-width: 768px) 50vw, 100vw" }: Props) {
   if (src) {
     return (
@@ -26,7 +16,7 @@ export function ImageSlot({ src, alt, label, className = "", priority, sizes = "
     <div
       role="img"
       aria-label={`Espaço reservado: ${label}`}
-      className={`flex flex-col items-center justify-center gap-2 bg-nude/50 text-taupe-dark ${className}`}
+      className={`flex flex-col items-center justify-center gap-2 bg-sage-soft px-4 text-center text-forest/70 ${className}`}
     >
       <ImageIcon aria-hidden className="size-6" strokeWidth={1.25} />
       <span className="text-xs tracking-widest uppercase">{label} · pendente</span>

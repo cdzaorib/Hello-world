@@ -29,42 +29,31 @@ export function Header() {
     };
   }, [open]);
 
-  return (
-    <header
-      className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
-        scrolled || open ? "bg-ivory/95 shadow-[0_1px_0_rgba(71,58,53,.08)] backdrop-blur" : "bg-transparent"
-      }`}
-    >
-      <div className="container-x flex h-16 items-center justify-between md:h-20">
-        <a href="#inicio" aria-label="Conceito Saúde Estética — início"><Logo /></a>
+  const cta = { name: "whatsapp_click", location: "header" };
 
-        <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
+  return (
+    <header className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${scrolled || open ? "bg-cream/95 shadow-[0_1px_0_rgba(23,59,42,.1)] backdrop-blur" : "bg-transparent"}`}>
+      <div className="container-x flex h-16 items-center justify-between md:h-20">
+        <a href="#inicio" aria-label="Conceito Saúde Estética Integrativa — início"><Logo size={scrolled ? 44 : 52} className="transition-all duration-500" /></a>
+
+        <nav aria-label="Principal" className="hidden items-center gap-7 lg:flex">
           {nav.map((i) => (
-            <a key={i.href} href={i.href} className="text-sm tracking-wide transition hover:text-taupe-dark">{i.label}</a>
+            <a key={i.href} href={i.href} className="text-sm tracking-wide transition hover:text-gold-dark">{i.label}</a>
           ))}
-          <Button href={bookingUrl()} external className="!px-5 !py-2.5">Agendar avaliação</Button>
+          <Button href={bookingUrl()} external track={cta} className="!px-5 !py-2.5">Agendar avaliação</Button>
         </nav>
 
-        <button
-          type="button"
-          className="-mr-2 p-2 md:hidden"
-          aria-expanded={open}
-          aria-controls="menu-mobile"
-          aria-label={open ? "Fechar menu" : "Abrir menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
+        <button type="button" className="-mr-2 p-2 lg:hidden" aria-expanded={open} aria-controls="menu-mobile" aria-label={open ? "Fechar menu" : "Abrir menu"} onClick={() => setOpen((v) => !v)}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
 
       {open && (
-        <nav id="menu-mobile" aria-label="Principal (mobile)" className="container-x flex h-[calc(100dvh-4rem)] flex-col gap-1 pt-6 md:hidden">
+        <nav id="menu-mobile" aria-label="Principal (mobile)" className="container-x flex h-[calc(100dvh-4rem)] flex-col gap-1 overflow-y-auto pt-6 lg:hidden">
           {nav.map((i) => (
-            <a key={i.href} href={i.href} onClick={() => setOpen(false)} className="border-b border-cafe/10 py-4 font-display text-3xl">
-              {i.label}
-            </a>
+            <a key={i.href} href={i.href} onClick={() => setOpen(false)} className="border-b border-forest/10 py-4 font-display text-3xl">{i.label}</a>
           ))}
-          <Button href={bookingUrl()} external className="mt-8">Agendar avaliação</Button>
+          <Button href={bookingUrl()} external track={{ ...cta, location: "menu_mobile" }} className="mt-8">Agendar avaliação</Button>
         </nav>
       )}
     </header>

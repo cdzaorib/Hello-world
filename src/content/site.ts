@@ -1,60 +1,66 @@
 /**
- * Dados institucionais da clínica. ÚNICA fonte para contatos e textos de marca.
- * Campos `null` = ainda não confirmados pela clínica: a interface esconde ou
- * degrada o item automaticamente (ver README, seção "Pendências").
+ * Dados institucionais. ÚNICA fonte para contatos e textos de marca.
+ * `null` = ainda não confirmado: a interface esconde ou degrada o item.
  */
 export const site = {
-  name: "Conceito Saúde Estética",
-  shortName: "Conceito",
-  tagline: "Beleza, saúde e bem-estar em equilíbrio",
-  headline: "Sua beleza, seu equilíbrio, sua essência.",
+  name: "Conceito Saúde Estética Integrativa",
+  shortName: "Conceito Saúde Estética",
+  positioning: "Saúde, beleza e equilíbrio de dentro para fora.",
   description:
-    "Conceito Saúde Estética: beleza, saúde e bem-estar em equilíbrio. Conheça a clínica e agende sua avaliação pelo WhatsApp.",
+    "Conceito Saúde Estética Integrativa em Bangu, Rio de Janeiro: estética avançada e saúde integrativa em um atendimento personalizado. Agende sua avaliação pelo WhatsApp.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   instagram: {
     handle: "@conceito.saudeestetica",
     url: "https://www.instagram.com/conceito.saudeestetica/",
   },
-  /** Somente dígitos com DDI+DDD, ex.: "5511999999999". PENDENTE. */
+  /** Somente dígitos com DDI+DDD, ex.: "5521999999999". PENDENTE. */
   whatsappNumber: null as string | null,
   whatsappMessage:
-    "Olá! Vim pelo site da Conceito Saúde Estética e gostaria de agendar uma avaliação.",
-  /** PENDENTES — confirmar com a clínica. */
-  address: null as {
-    street: string;
-    city: string;
-    state: string;
-    postalCode?: string;
-  } | null,
-  mapsEmbedUrl: null as string | null,
+    "Olá! Conheci a Conceito Saúde Estética pelo site e gostaria de saber mais sobre uma avaliação.",
+  /** Confirmado pelo perfil do Instagram (localização das publicações). */
+  location: { neighborhood: "Bangu", city: "Rio de Janeiro", state: "RJ" },
+  /** PENDENTES. */
+  street: null as string | null,
   mapsLink: null as string | null,
   hours: null as string[] | null,
   email: null as string | null,
-  /** Preencher apenas com a razão social/CNPJ e responsável técnico reais. */
   legal: { companyName: null as string | null, cnpj: null as string | null },
 } as const;
 
 export const nav = [
   { href: "#inicio", label: "Início" },
-  { href: "#sobre", label: "Sobre" },
-  { href: "#tratamentos", label: "Tratamentos" },
-  { href: "#diferenciais", label: "Diferenciais" },
+  { href: "#especialidades", label: "Especialidades" },
+  { href: "#essencia", label: "Nossa Essência" },
+  { href: "#profissionais", label: "Profissionais" },
   { href: "#contato", label: "Contato" },
 ] as const;
 
-export const about = {
-  eyebrow: "A clínica",
-  title: "Cuidar de si é um ato de equilíbrio.",
-  paragraphs: [
-    "A Conceito Saúde Estética nasce da ideia de que beleza, saúde e bem-estar caminham juntos: autocuidado com acolhimento, respeitando a individualidade de cada pessoa.",
-    "[TEXTO PENDENTE] Substituir por apresentação institucional oficial: história, filosofia de atendimento e profissionais, conforme material validado pela clínica.",
-  ],
-  image: { src: null as string | null, alt: "Ambiente da clínica Conceito Saúde Estética", label: "Foto da clínica" },
+export const hero = {
+  title: "Beleza, saúde e equilíbrio em cada detalhe.",
+  subtitle:
+    "Descubra uma nova forma de cuidar de você, unindo estética avançada e saúde integrativa em uma experiência de atendimento personalizada.",
+  primaryCta: "Quero agendar minha avaliação",
+  secondaryCta: "Conheça nossas especialidades",
+  /** PENDENTE: foto oficial em /public/images. */
+  image: { src: null as string | null, alt: "Profissionais da Conceito Saúde Estética Integrativa", label: "Foto oficial das profissionais" },
 } as const;
 
-export const hero = {
-  eyebrow: "Beleza, saúde e bem-estar em equilíbrio",
-  subtitle:
-    "Autocuidado, beleza individual e acolhimento em um só lugar. Agende uma avaliação e conheça a Conceito.",
-  image: { src: null as string | null, alt: "Atendimento na Conceito Saúde Estética", label: "Imagem principal" },
+export const essence = {
+  eyebrow: "Nossa essência",
+  title: "Um novo conceito de cuidado com você.",
+  paragraphs: [
+    "Acreditamos que beleza, saúde e bem-estar caminham juntos. Por isso a Conceito reúne estética avançada e saúde integrativa, para cuidar de você por inteiro e com propósito.",
+    "Cada atendimento começa pela escuta e pela avaliação individual, com acolhimento e respeito à sua história.",
+  ],
+  pillars: ["Saúde", "Estética", "Bem-estar"],
+  images: [
+    { src: null as string | null, alt: "Ambiente da clínica", label: "Foto da clínica" },
+    { src: null as string | null, alt: "Atendimento na clínica", label: "Foto do atendimento" },
+  ],
+} as const;
+
+export const finalCta = {
+  title: "Seu próximo momento de autocuidado começa aqui.",
+  subtitle: "Entre em contato com nossa equipe e conheça as possibilidades de atendimento.",
+  button: "Agendar minha avaliação",
 } as const;

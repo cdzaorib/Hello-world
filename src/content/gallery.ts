@@ -6,4 +6,5 @@ export const gallery: GalleryImage[] = [
   { src: null, alt: "Sala de atendimento", label: "Sala de atendimento" },
   { src: null, alt: "Detalhe do ambiente", label: "Ambiente" },
   { src: null, alt: "Equipe da clínica", label: "Equipe" },
+  { src: null, alt: "Atendimento na clínica", label: "Atendimento" },
 ];

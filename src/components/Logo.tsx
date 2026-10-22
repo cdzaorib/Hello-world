@@ -1,11 +1,18 @@
-import { site } from "@/content/site";
+import Image from "next/image";
 
-/** Texto provisório até o logotipo oficial ser fornecido (ver README). */
-export function Logo({ className = "" }: { className?: string }) {
+/**
+ * Logotipo oficial (recorte do avatar do Instagram, 512px).
+ * PENDENTE: substituir public/images/logo.png pelo arquivo original (SVG/PNG alta resolução).
+ */
+export function Logo({ size = 48, className = "" }: { size?: number; className?: string }) {
   return (
-    <span className={`font-display leading-none ${className}`}>
-      <span className="text-2xl font-semibold tracking-wide">{site.shortName}</span>
-      <span className="block text-[0.6rem] tracking-[0.35em] uppercase opacity-70">Saúde Estética</span>
-    </span>
+    <Image
+      src="/images/logo.png"
+      alt="Conceito Saúde Estética Integrativa"
+      width={size}
+      height={size}
+      priority
+      className={`rounded-full ${className}`}
+    />
   );
 }

@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { hero, site } from "@/content/site";
 import { bookingUrl } from "@/lib/whatsapp";
+import { Botanical } from "./Botanical";
 import { Button } from "./Button";
 import { ImageSlot } from "./ImageSlot";
 
@@ -15,26 +16,23 @@ export function Hero() {
   });
 
   return (
-    <section id="inicio" aria-labelledby="hero-title" className="relative pt-28 pb-16 md:pt-36 md:pb-24">
-      <div className="container-x grid items-center gap-12 md:grid-cols-12">
+    <section id="inicio" aria-labelledby="hero-title" className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
+      <Botanical className="pointer-events-none absolute -bottom-10 -left-10 h-96 text-sage/25" />
+      <div className="container-x relative grid items-center gap-12 md:grid-cols-12">
         <div className="md:col-span-7">
-          <motion.p {...item(0)} className="mb-6 text-xs font-medium tracking-[0.3em] text-taupe-dark uppercase">{hero.eyebrow}</motion.p>
-          <motion.h1 {...item(1)} id="hero-title" className="font-display text-5xl leading-[0.98] font-medium text-balance sm:text-6xl lg:text-7xl">
-            {site.headline}
+          <motion.p {...item(0)} className="mb-6 text-xs font-medium tracking-[0.3em] text-gold-dark uppercase">{site.positioning}</motion.p>
+          <motion.h1 {...item(1)} id="hero-title" className="font-display text-5xl leading-[0.98] font-medium text-balance text-forest sm:text-6xl lg:text-7xl">
+            {hero.title}
           </motion.h1>
-          <motion.p {...item(2)} className="mt-6 max-w-md text-lg leading-relaxed text-cafe/80">{hero.subtitle}</motion.p>
-          <motion.div {...item(3)} className="mt-9 flex flex-wrap gap-3">
-            <Button href={bookingUrl()} external>Agende sua avaliação</Button>
-            <Button href="#sobre" variant="ghost">Conheça a clínica</Button>
+          <motion.p {...item(2)} className="mt-6 max-w-lg text-lg leading-relaxed text-graphite/80">{hero.subtitle}</motion.p>
+          <motion.div {...item(3)} className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Button href={bookingUrl()} external track={{ name: "whatsapp_click", location: "hero" }}>{hero.primaryCta}</Button>
+            <Button href="#especialidades" variant="ghost">{hero.secondaryCta}</Button>
           </motion.div>
+          <motion.p {...item(4)} className="mt-6 text-sm text-graphite/60">{site.location.neighborhood}, {site.location.city}</motion.p>
         </div>
         <motion.div {...item(2)} className="md:col-span-5">
-          <ImageSlot
-            {...hero.image}
-            priority
-            sizes="(min-width: 768px) 40vw, 100vw"
-            className="aspect-[4/5] rounded-t-[999px] rounded-b-2xl"
-          />
+          <ImageSlot {...hero.image} priority sizes="(min-width: 768px) 40vw, 100vw" className="aspect-[4/5] rounded-t-[999px] rounded-b-2xl" />
         </motion.div>
       </div>
     </section>
