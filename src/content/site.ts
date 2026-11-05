@@ -46,10 +46,10 @@ export const hero = {
   secondaryCta: "Agendar avaliação",
   image: {
     src: "/images/hero-profissionais.jpg" as string | null,
-    alt: "Claudia Marques e Munique Cabral, profissionais da Conceito Saúde Estética Integrativa",
+    alt: "Ana Claudia Márques e Munique Cabral, profissionais da Conceito Saúde Estética Integrativa",
     label: "Foto oficial das profissionais",
   },
-  caption: "Claudia Marques & Munique Cabral",
+  caption: "Ana Claudia Márques & Munique Cabral",
 } as const;
 
 /** Faixa de destaques abaixo do hero: apenas fatos da marca, sem promessas. */

@@ -3,6 +3,8 @@ export type ProfessionalId = "claudia" | "munique";
 export type Professional = {
   id: ProfessionalId;
   name: string;
+  /** Como a profissional é chamada nos botões ("Agendar com …"). */
+  shortName: string;
   /** Área de atuação exibida no seletor e na seção de profissionais. */
   area: string;
   photo: string;
@@ -19,7 +21,8 @@ export type Professional = {
 export const professionals: Record<ProfessionalId, Professional> = {
   claudia: {
     id: "claudia",
-    name: "Claudia Marques",
+    name: "Ana Claudia Márques",
+    shortName: "Ana Claudia",
     area: "Saúde Integrativa",
     photo: "/images/claudia-marques.jpg",
     avatar: "/images/avatar-claudia.jpg",
@@ -30,6 +33,7 @@ export const professionals: Record<ProfessionalId, Professional> = {
   munique: {
     id: "munique",
     name: "Munique Cabral",
+    shortName: "Munique",
     area: "Estética Avançada",
     photo: "/images/munique-cabral.jpg",
     avatar: "/images/avatar-munique.jpg",

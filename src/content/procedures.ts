@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Activity, Apple, Droplet, Droplets, Flower, Flower2, Leaf, PersonStanding, Pill, Sparkles, Sprout, Waves } from "lucide-react";
+import { Activity, Apple, AudioWaveform, Droplet, Droplets, Flower, Flower2, Leaf, PersonStanding, Pill, Sparkles, Sprout, Waves } from "lucide-react";
 import type { ProfessionalId } from "./professionals";
 
 export type CategoryId = "estetica" | "integrativa";
@@ -63,10 +63,18 @@ export const procedures: Procedure[] = [
     professional: "claudia",
   },
   {
-    slug: "terapias-integrativas",
-    title: "Terapias Integrativas",
+    slug: "terapias-biofisicas-integrativas",
+    title: "Terapias Biofísicas & Integrativas",
     description: "Práticas complementares voltadas ao bem-estar e ao equilíbrio.",
     icon: Flower2,
+    category: "integrativa",
+    professional: "claudia",
+  },
+  {
+    slug: "exames-por-biorressonancia",
+    title: "Exames por Biorressonância",
+    description: "Avaliação complementar por biorressonância, com orientação individual.",
+    icon: AudioWaveform,
     category: "integrativa",
     professional: "claudia",
   },

@@ -20,7 +20,6 @@ export function Professionals() {
         <div className="mt-16 space-y-20 md:mt-20 md:space-y-28">
           {Object.values(professionals).map((p, i) => {
             const areas = procedures.filter((proc) => proc.professional === p.id).map((proc) => proc.title);
-            const firstName = p.name.split(" ")[0];
             return (
               <Reveal key={p.id}>
                 <article className={`flex flex-col gap-10 md:items-center md:gap-14 lg:gap-20 ${i % 2 ? "md:flex-row-reverse" : "md:flex-row"}`}>
@@ -61,7 +60,7 @@ export function Professionals() {
                       data-track-professional={p.id}
                       className={`${buttonClass("light")} mt-10 w-full sm:w-auto`}
                     >
-                      Agendar com {firstName}
+                      Agendar com {p.shortName}
                       <ArrowUpRight aria-hidden className="size-4" />
                       <span className="sr-only">(abre o WhatsApp)</span>
                     </a>
