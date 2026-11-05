@@ -4,29 +4,83 @@
 
 @theme {
   --color-forest: #173b2a;
+  --color-forest-deep: #10291d;
   --color-sage: #8c9f90;
-  --color-sage-soft: #dfe5dc;
+  --color-sage-soft: #e3e8e0;
   --color-gold: #b49a5b;
-  --color-gold-dark: #7a6630; /* dourado escurecido p/ texto (contraste AA) */
+  --color-gold-dark: #7a6630; /* texto dourado sobre fundos claros (contraste AA) */
+  --color-gold-light: #d4be87; /* texto dourado sobre o verde (contraste AA) */
   --color-cream: #f5f0e6;
+  --color-ivory: #fbf8f2;
   --color-graphite: #2e302c;
   --font-display: "Cormorant Garamond Variable", Georgia, serif;
   --font-sans: "Manrope Variable", system-ui, sans-serif;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
-body { background: var(--color-cream); color: var(--color-graphite); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+html:has(dialog[open]) { overflow: hidden; }
+body { background: var(--color-cream); color: var(--color-graphite); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 ::selection { background: var(--color-sage-soft); }
-:focus-visible { outline: 2px solid var(--color-graphite); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--color-forest); outline-offset: 3px; border-radius: 4px; }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-}
-
-.container-x { margin-inline: auto; width: 100%; max-width: 72rem; padding-inline: 1.25rem; }
+.container-x { margin-inline: auto; width: 100%; max-width: 74rem; padding-inline: 1.25rem; }
 @media (min-width: 768px) { .container-x { padding-inline: 2rem; } }
 
 /* Arcos: raio superior = metade da largura (vertical em % da altura, conforme a proporção). */
-.arch-4-5 { border-radius: 50% 50% 1rem 1rem / 40% 40% 1rem 1rem; }
+.arch-4-5 { border-radius: 50% 50% 1.25rem 1.25rem / 40% 40% 1.25rem 1.25rem; }
 .arch-2-3 { border-radius: 50% 50% 1rem 1rem / 33.333% 33.333% 1rem 1rem; }
+
+/* Entrada do hero só com CSS: não depende de JavaScript nem atrasa o carregamento. */
+@keyframes rise-in { from { opacity: 0; transform: translateY(14px); } }
+.rise-in { animation: rise-in 0.55s var(--ease-soft) both; }
+
+/* Diálogos (seletor de agendamento e menu mobile) */
+@keyframes dialog-in { from { opacity: 0; transform: translateY(16px) scale(0.985); } }
+@keyframes dialog-out { to { opacity: 0; transform: translateY(12px) scale(0.985); } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+
+.booking-dialog {
+  width: min(100% - 2rem, 32rem);
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 1.75rem;
+  background: var(--color-ivory);
+  color: var(--color-graphite);
+  box-shadow: 0 40px 80px -30px rgb(16 41 29 / 0.45);
+}
+.booking-dialog::backdrop { background: rgb(16 41 29 / 0.5); backdrop-filter: blur(3px); }
+@media (max-width: 639px) {
+  .booking-dialog { width: 100%; max-height: 92dvh; margin: auto 0 0; border-radius: 1.75rem 1.75rem 0 0; }
+}
+
+.menu-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-cream);
+  color: var(--color-graphite);
+}
+.menu-dialog::backdrop { background: transparent; }
+
+dialog[open] { animation: dialog-in 0.32s var(--ease-soft); }
+dialog[open]::backdrop { animation: fade-in 0.32s ease; }
+dialog[data-closing] { animation: dialog-out 0.18s ease forwards; }
+dialog[data-closing]::backdrop { animation: fade-out 0.18s ease forwards; }
+.menu-dialog[open] .menu-link { animation: rise-in 0.45s var(--ease-soft) both; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after, ::backdrop { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
+}

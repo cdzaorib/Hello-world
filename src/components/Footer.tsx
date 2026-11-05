@@ -1,66 +1,105 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
-import { nav, site } from "@/content/site";
 import { professionals } from "@/content/professionals";
-import { bookingUrl, hasWhatsapp, professionalBooking } from "@/lib/whatsapp";
+import { nav, site } from "@/content/site";
+import { formatPhone, professionalBookingUrl } from "@/lib/whatsapp";
 import { InstagramIcon } from "./icons";
 import { Logo } from "./Logo";
+import { Wordmark } from "./Wordmark";
+
+const heading = "text-[0.68rem] font-semibold tracking-[0.26em] text-gold-light uppercase";
+const link = "text-cream/80 transition-colors hover:text-cream";
 
 export function Footer() {
   const { neighborhood, city, state } = site.location;
   return (
-    <footer className="bg-forest py-14 text-cream">
-      <div className="container-x grid gap-10 md:grid-cols-3">
-        <div>
-          <Logo size={72} />
-          <p className="mt-4 max-w-xs text-sm text-cream/75">{site.positioning}</p>
+    <footer id="rodape" className="bg-forest text-cream">
+      <div className="container-x grid gap-12 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-12 lg:gap-8">
+        <div className="sm:col-span-2 lg:col-span-4">
+          <div className="flex items-center gap-4">
+            <Logo size={60} />
+            <Wordmark tone="light" />
+          </div>
+          <p className="mt-6 max-w-xs font-display text-xl leading-snug text-cream/85">{site.positioning}</p>
         </div>
-        <nav aria-label="Rodapé">
-          <ul className="space-y-2 text-sm">
+
+        <nav aria-label="Rodapé" className="lg:col-span-2 lg:col-start-6">
+          <h2 className={heading}>Navegação</h2>
+          <ul className="mt-5 space-y-3 text-sm">
             {nav.map((i) => (
-              <li key={i.href}><a href={`/${i.href}`} className="text-cream/80 hover:text-cream">{i.label}</a></li>
+              <li key={i.href}>
+                <a href={i.href} className={link}>
+                  {i.label}
+                </a>
+              </li>
             ))}
-            <li><Link href="/politica-de-privacidade" className="text-cream/80 hover:text-cream">Aviso de privacidade</Link></li>
           </ul>
         </nav>
-        <address className="space-y-3 text-sm not-italic text-cream/85">
-          <p className="flex gap-2">
-            <MapPin aria-hidden className="mt-0.5 size-4 shrink-0" />
-            <span>
-              {site.street ? `${site.street} — ` : ""}{neighborhood}, {city}/{state}
-              {!site.street && <span className="block text-cream/60">[PENDENTE] endereço completo</span>}
-              {site.mapsLink && <a className="block underline" href={site.mapsLink} target="_blank" rel="noopener noreferrer">Ver no Google Maps</a>}
-            </span>
-          </p>
-          <p>
-            <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" data-track="instagram_click" data-track-location="footer" className="inline-flex items-center gap-2 hover:text-cream">
-              <InstagramIcon className="size-5" /> {site.instagram.handle}
-            </a>
-          </p>
-          {hasWhatsapp && (
-            <p>
-              <a href={bookingUrl()} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-location="footer" className="hover:text-cream">
-                WhatsApp da clínica
-              </a>
-            </p>
-          )}
-          {Object.values(professionals).map((p) =>
-            p.whatsappNumber ? (
-              <p key={p.id}>
-                <a href={professionalBooking(p).url} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-location="footer" data-track-professional={p.id} className="hover:text-cream">
-                  WhatsApp · {p.name}
+
+        <div className="lg:col-span-3">
+          <h2 className={heading}>Agendamentos</h2>
+          <ul className="mt-5 space-y-4 text-sm">
+            {Object.values(professionals).map((p) => (
+              <li key={p.id}>
+                <a
+                  href={professionalBookingUrl(p)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-track="whatsapp_click"
+                  data-track-location="footer"
+                  data-track-professional={p.id}
+                  className={`${link} block`}
+                >
+                  <span className="block text-cream">{p.name}</span>
+                  <span className="text-cream/65">WhatsApp {formatPhone(p.whatsappNumber)}</span>
                 </a>
-              </p>
-            ) : (
-              <p key={p.id} className="text-cream/60">[PENDENTE] WhatsApp · {p.name}</p>
-            ),
-          )}
-          {site.hours && <p>{site.hours.join(" · ")}</p>}
-        </address>
+              </li>
+            ))}
+            <li>
+              <a
+                href={site.instagram.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-track="instagram_click"
+                data-track-location="footer"
+                className={`${link} inline-flex items-center gap-2`}
+              >
+                <InstagramIcon className="size-4" /> {site.instagram.handle}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="lg:col-span-2">
+          <h2 className={heading}>Localização</h2>
+          <address className="mt-5 text-sm leading-relaxed text-cream/80 not-italic">
+            {site.street && (
+              <>
+                {site.street}
+                <br />
+              </>
+            )}
+            {neighborhood}
+            <br />
+            {city} — {state}
+            {site.mapsLink && (
+              <a href={site.mapsLink} target="_blank" rel="noopener noreferrer" className={`${link} mt-2 block underline underline-offset-4`}>
+                Ver no Google Maps
+              </a>
+            )}
+          </address>
+          {site.hours && <p className="mt-4 text-sm text-cream/70">{site.hours.join(" · ")}</p>}
+        </div>
       </div>
-      <div className="container-x mt-10 border-t border-cream/15 pt-6 text-xs text-cream/60">
-        © {new Date().getFullYear()} {site.legal.companyName ?? site.name}.
-        {site.legal.cnpj && <> CNPJ {site.legal.cnpj}.</>} Todos os direitos reservados.
+
+      <div className="border-t border-cream/10">
+        <div className="container-x flex flex-col gap-3 py-7 text-xs text-cream/55 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} {site.legal.companyName ?? site.name}.{site.legal.cnpj && <> CNPJ {site.legal.cnpj}.</>} Todos os direitos reservados.
+          </p>
+          <Link href="/politica-de-privacidade" className="transition-colors hover:text-cream">
+            Aviso de privacidade
+          </Link>
+        </div>
       </div>
     </footer>
   );

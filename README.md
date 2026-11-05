@@ -1,6 +1,6 @@
 # Conceito Saúde Estética Integrativa — landing page
 
-Landing page única (Bangu, Rio de Janeiro) focada em levar o visitante ao WhatsApp.
+Landing page única (Bangu, Rio de Janeiro) focada em levar o visitante ao WhatsApp da profissional certa.
 Next.js (App Router) · React · TypeScript strict · Tailwind CSS v4 · Motion · Lucide · `next/image`.
 Sem banco de dados, autenticação ou API própria.
 
@@ -12,7 +12,9 @@ npm run dev        # http://localhost:3000
 npm run lint && npm run typecheck && npm run build
 ```
 
-Copie `.env.example` para `.env.local` e defina `NEXT_PUBLIC_SITE_URL` (sitemap, robots e Open Graph).
+## Estrutura da página
+
+Header fixo → Hero (foto oficial em arco + faixa de destaques) → Procedimentos (filtros + 12 cards) → Nossa Essência → Profissionais → Depoimentos (só com itens reais) → CTA final → Rodapé.
 
 ## Onde editar
 
@@ -20,61 +22,57 @@ Todo o conteúdo fica em `src/content/` (tipado); os componentes não têm texto
 
 | Arquivo | Conteúdo |
 | --- | --- |
-| `site.ts` | marca, WhatsApp geral, Instagram, localização, endereço, mapa, horários, textos e mensagens de WhatsApp |
-| `procedures.ts` | vitrine única de procedimentos; cada um aponta para a profissional responsável (`professional`) |
-| `professionals.ts` | profissionais: nome, área, foto, **WhatsApp de agendamento**, registro (só após confirmação) |
-| `gallery.ts` | galeria de fotos oficiais |
-| `testimonials.ts` | depoimentos reais autorizados (vazio = não aparece) |
+| `site.ts` | marca, Instagram, localização, endereço/mapa/horários (opcionais), textos do hero, destaques, essência, seletor, CTA final e mensagens de WhatsApp |
+| `procedures.ts` | os 12 procedimentos: título, descrição curta, ícone, categoria (filtro) e profissional responsável |
+| `professionals.ts` | profissionais: nome, área, foto, avatar, **WhatsApp**, registro e bio (só aparecem se preenchidos) |
+| `testimonials.ts` | depoimentos reais autorizados (vazio = seção oculta) |
 
-Cores: tokens em `src/app/globals.css` (verde profundo, sálvia, dourado, creme, grafite). O dourado `#B49A5B` é usado só em linhas/bordas; textos usam `gold-dark` para manter contraste AA.
+Cores e tipografia: tokens em `src/app/globals.css` (verde profundo, sálvia, dourado, creme, grafite; Cormorant Garamond + Manrope, self-hosted). Dourado em texto usa `gold-dark` (fundo claro) ou `gold-light` (fundo verde) para manter contraste AA.
 
-Imagens: coloque em `public/images/` e informe `src: "/images/arquivo.jpg"`. Com `src: null` aparece um espaço reservado marcado "pendente".
+Imagens: `public/images/`, referenciadas pelos arquivos de conteúdo. Com `src: null` aparece um espaço reservado.
 
 ## Agendamento por WhatsApp
 
-Os procedimentos aparecem juntos, sem separação por profissional, mas **cada card abre o WhatsApp da profissional responsável** com a mensagem:
+**Procedimentos (1 clique):** cada card abre direto o WhatsApp da profissional responsável com:
 
 > Olá! Conheci a Conceito Saúde Estética pelo site e gostaria de agendar uma avaliação com {profissional} para o procedimento de {procedimento}. Poderiam me informar sobre a disponibilidade?
 
-| Profissional | Procedimentos | WhatsApp |
-| --- | --- | --- |
-| Claudia Marques | Tricologia Integrativa, Nutrição Funcional Especializada, Naturopatia / Limpeza do Terreno Biológico, Terapia Capilar Personalizada, Suplementação Individualizada, Terapias Integrativas | `552121168332` |
-| Munique Cabral | Harmonização Corporal, Glútea, de Seios e Íntima, Emagrecimento Sistêmico, Protocolos Regenerativos com PRP | `5521979341201` |
+| Profissional | Área | Procedimentos | WhatsApp |
+| --- | --- | --- | --- |
+| Claudia Marques | Saúde Integrativa | Tricologia Integrativa, Nutrição Funcional Especializada, Naturopatia / Limpeza do Terreno Biológico, Terapia Capilar Personalizada, Suplementação Individualizada, Terapias Integrativas | `552121168332` |
+| Munique Cabral | Estética Avançada | Harmonização Corporal, Glútea, de Seios e Íntima, Emagrecimento Sistêmico, Protocolos Regenerativos com PRP | `5521979341201` |
 
-Ordem de destino de um card: WhatsApp da profissional → WhatsApp geral (`site.whatsappNumber`) → Instagram oficial. Nunca um número fictício.
-Para mudar quem atende um procedimento, troque `professional` em `procedures.ts`; para mudar um número, edite `whatsappNumber` em `professionals.ts` (dígitos com DDI+DDD).
+**CTAs gerais** (header, hero, botão flutuante, menu mobile e CTA final) abrem o seletor *"Com quem deseja agendar sua avaliação?"* (`BookingDialog`), que leva ao WhatsApp da profissional escolhida, sem formulário. O seletor é um `<dialog>` nativo: foco preso, Esc fecha, foco volta ao botão de origem; no celular aparece como painel inferior.
 
-Os botões gerais (header, hero, botão flutuante, CTA final) usam `site.whatsappNumber`, ainda pendente; por enquanto levam ao Instagram.
+Para abrir o seletor de qualquer componente: `<BookingTrigger location="...">` ou `openBooking()` (`src/lib/booking.ts`).
+Para mudar quem atende um procedimento, troque `professional` em `procedures.ts`; para mudar um número, edite `whatsappNumber` em `professionals.ts`.
 
 ## Mensuração
 
-- Cliques geram eventos (`procedure_click` com `procedure`/`professional`/`channel`; `whatsapp_click` e `instagram_click` com `location`) via `src/lib/track.ts`: disparam `CustomEvent("conceito:track")` e empurram para `window.dataLayer` se existir. **Nenhum pixel/analytics está instalado.** Conecte GA4/GTM/Meta apenas depois de configurar consentimento (LGPD).
+Cliques geram eventos via `src/lib/track.ts` (`CustomEvent("conceito:track")` + `window.dataLayer`, se existir):
+`procedure_click` (procedure, professional), `booking_open` (location), `whatsapp_click` (location, professional), `instagram_click` (location).
+**Nenhum pixel/analytics está instalado.** Conecte GA4/GTM/Meta apenas depois de configurar consentimento (LGPD).
 
-## Pendências para publicar
+## Pendências
 
-Informações confirmadas pelo material enviado: nome, posicionamento, localização (Bangu, RJ), procedimentos e responsáveis, profissionais e suas áreas, WhatsApp da Claudia. O restante **não foi inventado**:
-
-- [ ] WhatsApp geral da clínica (`site.ts`), ou decidir para onde vão os botões gerais
-- [ ] Logotipo original em alta resolução — hoje `public/images/logo.png` é um recorte (512px) do avatar do Instagram; substituir pelo arquivo oficial (idealmente SVG)
-- [ ] Fotos: todas as seções usam o material enviado e o Instagram (recortes sem texto). Não há fotos do espaço físico, por isso a galeria mostra equipe e detalhes. Algumas imagens têm baixa resolução (foto da Claudia, ampolas, detalhes do uniforme); vale trocar por originais. Confirmar autorização de uso de imagem
-- [ ] Logotipo: o arquivo em alta enviado é o selo "Blend de Óleos" (produto), por isso não foi usado
-- [ ] Endereço completo e link do Google Maps
-- [ ] Horário de atendimento, e-mail, razão social/CNPJ
-- [ ] Formação e registro profissional de cada profissional (área já preenchida conforme o material oficial; o título "Dra." não foi usado)
-- [ ] Validação, com a clínica, do escopo/elegibilidade de cada procedimento (inclui Protocolos com PRP)
-- [ ] Depoimentos reais autorizados
-- [ ] Antes/depois: só publicar com consentimento do paciente e conforme as normas de publicidade dos conselhos profissionais (CFM/CFN/CRBM etc., conforme cada profissional)
+- [ ] Validar com as profissionais as descrições curtas dos 12 procedimentos (`procedures.ts`), redigidas de forma neutra, sem promessa de resultado
+- [ ] Logotipo original em alta resolução (hoje `public/images/logo.png` é um recorte de 512px do avatar do Instagram; idealmente SVG)
+- [ ] Fotos originais em alta resolução: a da Claudia, as ampolas e os detalhes do uniforme vêm de recortes de baixa resolução. Não há fotos do espaço físico
+- [ ] Formação, registro profissional e bio de cada profissional (ficam ocultos até serem preenchidos; o título "Dra." não foi usado)
+- [ ] Endereço completo, Google Maps, horário, e-mail, razão social/CNPJ (aparecem automaticamente quando preenchidos em `site.ts`)
+- [ ] Validação de escopo/elegibilidade de cada procedimento (inclui Protocolos com PRP) e das regras de publicidade dos conselhos profissionais
+- [ ] Depoimentos e antes/depois: só com consentimento por escrito
 - [ ] Revisão jurídica do aviso de privacidade (`src/app/politica-de-privacidade`, é rascunho)
 
 ## Publicar na Vercel
 
-O projeto já está conectado à Vercel como `conceitosaudeesteticaintegrativa`:
+Projeto Vercel: `conceitosaudeesteticaintegrativa`.
 
-- **Produção:** https://conceitosaudeesteticaintegrativa.vercel.app (entra no ar quando este branch for mesclado no `main`).
-- **Prévias:** cada push em outro branch gera um link de prévia (exige login na Vercel).
-- `NEXT_PUBLIC_SITE_URL` é opcional: sem ela, o site usa o domínio de produção da Vercel (`VERCEL_PROJECT_PRODUCTION_URL`).
-- **Domínio próprio (sem `.vercel.app`):** registre o domínio (ex.: `.com.br` no registro.br ou `.com` na própria Vercel), adicione em *Settings → Domains* e defina `NEXT_PUBLIC_SITE_URL` com ele.
+- **Produção:** https://conceitosaudeesteticaintegrativa.vercel.app (publica ao mesclar no `main`).
+- **Prévias:** cada branch/PR gera um link de prévia (exige login na Vercel).
+- `NEXT_PUBLIC_SITE_URL` está configurada na Vercel com o domínio oficial (canonical, Open Graph e sitemap).
+- **Domínio próprio (sem `.vercel.app`):** registre o domínio, adicione em *Settings → Domains* e atualize `NEXT_PUBLIC_SITE_URL`.
 
 ## Qualidade
 
-HTML semântico, skip link, menu mobile acessível (Esc fecha, `aria-expanded`), foco visível, `prefers-reduced-motion` respeitado, fontes self-hosted, `next/image`, página estática, JSON-LD (`HealthAndBeautyBusiness`) só com dados confirmados e SEO local (Bangu / Rio de Janeiro).
+HTML semântico, skip link, `<dialog>` nativo para menu e seletor (foco e Esc), áreas de toque ≥ 44px, foco visível, `prefers-reduced-motion` respeitado, entrada do hero só com CSS, fontes self-hosted, `next/image`, página estática, JSON-LD (`HealthAndBeautyBusiness` + catálogo de serviços) só com dados confirmados, SEO local (Bangu / Rio de Janeiro).

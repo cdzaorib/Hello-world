@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { BookingDialog } from "@/components/BookingDialog";
+import { ClickTracker } from "@/components/ClickTracker";
 import { site } from "@/content/site";
 import { organizationJsonLd } from "@/lib/jsonld";
 
@@ -7,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: `${site.name} | Bangu, Rio de Janeiro`, template: `%s | ${site.name}` },
   description: site.description,
-  keywords: ["estética avançada", "saúde integrativa", "tricologia", "nutrição funcional", "harmonização", "clínica de estética em Bangu", "estética Rio de Janeiro"],
+  keywords: ["estética avançada", "saúde integrativa", "tricologia integrativa", "nutrição funcional", "naturopatia", "harmonização corporal", "clínica de estética em Bangu", "estética Rio de Janeiro", "saúde integrativa Bangu"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -33,6 +35,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Pular para o conteúdo
         </a>
         {children}
+        <BookingDialog />
+        <ClickTracker />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }} />
       </body>
     </html>
