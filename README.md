@@ -39,7 +39,7 @@ Os procedimentos aparecem juntos, sem separação por profissional, mas **cada c
 | Profissional | Procedimentos | WhatsApp |
 | --- | --- | --- |
 | Claudia Marques | Tricologia Integrativa, Nutrição Funcional Especializada, Naturopatia / Limpeza do Terreno Biológico, Terapia Capilar Personalizada, Suplementação Individualizada, Terapias Integrativas | `552121168332` |
-| Munique Cabral | Harmonização Corporal, Glútea, de Seios e Íntima, Emagrecimento Sistêmico, Protocolos Regenerativos com PRP | **pendente** |
+| Munique Cabral | Harmonização Corporal, Glútea, de Seios e Íntima, Emagrecimento Sistêmico, Protocolos Regenerativos com PRP | `5521979341201` |
 
 Ordem de destino de um card: WhatsApp da profissional → WhatsApp geral (`site.whatsappNumber`) → Instagram oficial. Nunca um número fictício.
 Para mudar quem atende um procedimento, troque `professional` em `procedures.ts`; para mudar um número, edite `whatsappNumber` em `professionals.ts` (dígitos com DDI+DDD).
@@ -54,11 +54,9 @@ Os botões gerais (header, hero, botão flutuante, CTA final) usam `site.whatsap
 
 Informações confirmadas pelo material enviado: nome, posicionamento, localização (Bangu, RJ), procedimentos e responsáveis, profissionais e suas áreas, WhatsApp da Claudia. O restante **não foi inventado**:
 
-- [ ] WhatsApp da Munique Cabral (`professionals.ts`) — até lá, os procedimentos dela levam ao Instagram
 - [ ] WhatsApp geral da clínica (`site.ts`), ou decidir para onde vão os botões gerais
-- [ ] Confirmar que `55 21 2116-8332` (formato de telefone fixo) está ativo no WhatsApp Business
 - [ ] Logotipo original em alta resolução — hoje `public/images/logo.png` é um recorte (512px) do avatar do Instagram; substituir pelo arquivo oficial (idealmente SVG)
-- [ ] Fotos: hero e profissionais já usam o material enviado (recortes sem texto; a foto da Claudia vem de uma arte e tem só 464×580 px, vale trocar por um original). Faltam clínica/atendimento/galeria. Confirmar autorização de uso de imagem e que as fotos representam as profissionais reais
+- [ ] Fotos: todas as seções usam o material enviado e o Instagram (recortes sem texto). Não há fotos do espaço físico, por isso a galeria mostra equipe e detalhes. Algumas imagens têm baixa resolução (foto da Claudia, ampolas, detalhes do uniforme); vale trocar por originais. Confirmar autorização de uso de imagem
 - [ ] Logotipo: o arquivo em alta enviado é o selo "Blend de Óleos" (produto), por isso não foi usado
 - [ ] Endereço completo e link do Google Maps
 - [ ] Horário de atendimento, e-mail, razão social/CNPJ
@@ -70,9 +68,12 @@ Informações confirmadas pelo material enviado: nome, posicionamento, localiza�
 
 ## Publicar na Vercel
 
-1. Importe o repositório (Next.js é detectado automaticamente).
-2. Defina `NEXT_PUBLIC_SITE_URL` com o domínio final.
-3. Deploy e configure o domínio em *Settings → Domains*.
+O projeto já está conectado à Vercel como `conceitosaudeesteticaintegrativa`:
+
+- **Produção:** https://conceitosaudeesteticaintegrativa.vercel.app (entra no ar quando este branch for mesclado no `main`).
+- **Prévias:** cada push em outro branch gera um link de prévia (exige login na Vercel).
+- `NEXT_PUBLIC_SITE_URL` é opcional: sem ela, o site usa o domínio de produção da Vercel (`VERCEL_PROJECT_PRODUCTION_URL`).
+- **Domínio próprio (sem `.vercel.app`):** registre o domínio (ex.: `.com.br` no registro.br ou `.com` na própria Vercel), adicione em *Settings → Domains* e defina `NEXT_PUBLIC_SITE_URL` com ele.
 
 ## Qualidade
 

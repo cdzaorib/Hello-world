@@ -29,8 +29,7 @@ export const professionals: Record<ProfessionalId, Professional> = {
     name: "Munique Cabral",
     area: "Estética",
     photo: "/images/munique-cabral.jpg",
-    /** PENDENTE: número não informado. Enquanto for null, os procedimentos dela usam o canal geral. */
-    whatsappNumber: null,
+    whatsappNumber: "5521979341201",
     registration: null,
     bio: null,
   },

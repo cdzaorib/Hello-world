@@ -8,7 +8,10 @@ export const site = {
   positioning: "Saúde, beleza e equilíbrio de dentro para fora.",
   description:
     "Conceito Saúde Estética Integrativa em Bangu, Rio de Janeiro: estética avançada e saúde integrativa em um atendimento personalizado. Agende sua avaliação pelo WhatsApp.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  /** Na Vercel, usa o domínio de produção do projeto quando NEXT_PUBLIC_SITE_URL não estiver definida. */
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000"),
   instagram: {
     handle: "@conceito.saudeestetica",
     url: "https://www.instagram.com/conceito.saudeestetica/",
@@ -59,8 +62,8 @@ export const essence = {
   ],
   pillars: ["Saúde", "Estética", "Bem-estar"],
   images: [
-    { src: null as string | null, alt: "Ambiente da clínica", label: "Foto da clínica" },
-    { src: null as string | null, alt: "Atendimento na clínica", label: "Foto do atendimento" },
+    { src: "/images/essencia-uniforme.jpg" as string | null, alt: "Detalhe do uniforme bordado de Munique Cabral", label: "Detalhe do uniforme" },
+    { src: "/images/essencia-ampolas.jpg" as string | null, alt: "Mãos segurando ampolas usadas nos protocolos", label: "Protocolos" },
   ],
 } as const;
 
