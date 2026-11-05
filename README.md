@@ -20,9 +20,9 @@ Todo o conteúdo fica em `src/content/` (tipado); os componentes não têm texto
 
 | Arquivo | Conteúdo |
 | --- | --- |
-| `site.ts` | marca, WhatsApp, Instagram, localização, endereço, mapa, horários, textos do hero, essência e CTA final |
-| `specialties.ts` | especialidades (dois grupos) — nomes vindos das publicações oficiais |
-| `professionals.ts` | profissionais (foto, formação, registro: só após confirmação) |
+| `site.ts` | marca, WhatsApp geral, Instagram, localização, endereço, mapa, horários, textos e mensagens de WhatsApp |
+| `procedures.ts` | vitrine única de procedimentos; cada um aponta para a profissional responsável (`professional`) |
+| `professionals.ts` | profissionais: nome, área, foto, **WhatsApp de agendamento**, registro (só após confirmação) |
 | `gallery.ts` | galeria de fotos oficiais |
 | `testimonials.ts` | depoimentos reais autorizados (vazio = não aparece) |
 
@@ -30,23 +30,40 @@ Cores: tokens em `src/app/globals.css` (verde profundo, sálvia, dourado, creme,
 
 Imagens: coloque em `public/images/` e informe `src: "/images/arquivo.jpg"`. Com `src: null` aparece um espaço reservado marcado "pendente".
 
-## WhatsApp e mensuração
+## Agendamento por WhatsApp
 
-- Defina `whatsappNumber` em `site.ts` (dígitos com DDI+DDD, ex. `5521999999999`). Todos os CTAs abrem `wa.me` com a mensagem predefinida; cada especialidade envia uma mensagem contextual.
-- **Enquanto o número for `null`, os CTAs levam ao Instagram oficial**, nunca a um número fictício.
-- Cliques geram eventos (`whatsapp_click`, `specialty_click`, `instagram_click`, com `location`/`specialty`) via `src/lib/track.ts`: disparam `CustomEvent("conceito:track")` e empurram para `window.dataLayer` se existir. **Nenhum pixel/analytics está instalado.** Conecte GA4/GTM/Meta apenas depois de configurar consentimento (LGPD).
+Os procedimentos aparecem juntos, sem separação por profissional, mas **cada card abre o WhatsApp da profissional responsável** com a mensagem:
+
+> Olá! Conheci a Conceito Saúde Estética pelo site e gostaria de agendar uma avaliação com {profissional} para o procedimento de {procedimento}. Poderiam me informar sobre a disponibilidade?
+
+| Profissional | Procedimentos | WhatsApp |
+| --- | --- | --- |
+| Claudia Marques | Tricologia Integrativa, Nutrição Funcional Especializada, Naturopatia / Limpeza do Terreno Biológico, Terapia Capilar Personalizada, Suplementação Individualizada, Terapias Integrativas | `552121168332` |
+| Munique Cabral | Harmonização Corporal, Glútea, de Seios e Íntima, Emagrecimento Sistêmico, Protocolos Regenerativos com PRP | **pendente** |
+
+Ordem de destino de um card: WhatsApp da profissional → WhatsApp geral (`site.whatsappNumber`) → Instagram oficial. Nunca um número fictício.
+Para mudar quem atende um procedimento, troque `professional` em `procedures.ts`; para mudar um número, edite `whatsappNumber` em `professionals.ts` (dígitos com DDI+DDD).
+
+Os botões gerais (header, hero, botão flutuante, CTA final) usam `site.whatsappNumber`, ainda pendente; por enquanto levam ao Instagram.
+
+## Mensuração
+
+- Cliques geram eventos (`procedure_click` com `procedure`/`professional`/`channel`; `whatsapp_click` e `instagram_click` com `location`) via `src/lib/track.ts`: disparam `CustomEvent("conceito:track")` e empurram para `window.dataLayer` se existir. **Nenhum pixel/analytics está instalado.** Conecte GA4/GTM/Meta apenas depois de configurar consentimento (LGPD).
 
 ## Pendências para publicar
 
-Informações extraídas das capturas do Instagram: nome, posicionamento, localização (Bangu, RJ), nomes das especialidades e das duas profissionais. O restante **não foi inventado**:
+Informações confirmadas pelo material enviado: nome, posicionamento, localização (Bangu, RJ), procedimentos e responsáveis, profissionais e suas áreas, WhatsApp da Claudia. O restante **não foi inventado**:
 
-- [ ] Número de WhatsApp validado
+- [ ] WhatsApp da Munique Cabral (`professionals.ts`) — até lá, os procedimentos dela levam ao Instagram
+- [ ] WhatsApp geral da clínica (`site.ts`), ou decidir para onde vão os botões gerais
+- [ ] Confirmar que `55 21 2116-8332` (formato de telefone fixo) está ativo no WhatsApp Business
 - [ ] Logotipo original em alta resolução — hoje `public/images/logo.png` é um recorte (512px) do avatar do Instagram; substituir pelo arquivo oficial (idealmente SVG)
-- [ ] Fotos oficiais (profissionais, clínica, atendimento) com autorização de uso de imagem. As artes das publicações não foram reaproveitadas
+- [ ] Fotos: hero e profissionais já usam o material enviado (recortes sem texto; a foto da Claudia vem de uma arte e tem só 464×580 px, vale trocar por um original). Faltam clínica/atendimento/galeria. Confirmar autorização de uso de imagem e que as fotos representam as profissionais reais
+- [ ] Logotipo: o arquivo em alta enviado é o selo "Blend de Óleos" (produto), por isso não foi usado
 - [ ] Endereço completo e link do Google Maps
 - [ ] Horário de atendimento, e-mail, razão social/CNPJ
-- [ ] Formação, registro profissional e especialidade de cada profissional (sem títulos inventados)
-- [ ] Validação, com a clínica, do escopo/elegibilidade e de uma descrição para cada especialidade
+- [ ] Formação e registro profissional de cada profissional (área já preenchida conforme o material oficial; o título "Dra." não foi usado)
+- [ ] Validação, com a clínica, do escopo/elegibilidade de cada procedimento (inclui Protocolos com PRP)
 - [ ] Depoimentos reais autorizados
 - [ ] Antes/depois: só publicar com consentimento do paciente e conforme as normas de publicidade dos conselhos profissionais (CFM/CFN/CRBM etc., conforme cada profissional)
 - [ ] Revisão jurídica do aviso de privacidade (`src/app/politica-de-privacidade`, é rascunho)

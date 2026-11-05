@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { nav, site } from "@/content/site";
-import { hasWhatsapp, bookingUrl } from "@/lib/whatsapp";
+import { professionals } from "@/content/professionals";
+import { bookingUrl, hasWhatsapp, professionalBooking } from "@/lib/whatsapp";
 import { InstagramIcon } from "./icons";
 import { Logo } from "./Logo";
 
@@ -36,11 +37,24 @@ export function Footer() {
               <InstagramIcon className="size-5" /> {site.instagram.handle}
             </a>
           </p>
-          <p>
-            <a href={bookingUrl()} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-location="footer" className="hover:text-cream">
-              {hasWhatsapp ? "WhatsApp" : "[PENDENTE] WhatsApp — por enquanto, fale pelo Instagram"}
-            </a>
-          </p>
+          {hasWhatsapp && (
+            <p>
+              <a href={bookingUrl()} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-location="footer" className="hover:text-cream">
+                WhatsApp da clínica
+              </a>
+            </p>
+          )}
+          {Object.values(professionals).map((p) =>
+            p.whatsappNumber ? (
+              <p key={p.id}>
+                <a href={professionalBooking(p).url} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-track-location="footer" data-track-professional={p.id} className="hover:text-cream">
+                  WhatsApp · {p.name}
+                </a>
+              </p>
+            ) : (
+              <p key={p.id} className="text-cream/60">[PENDENTE] WhatsApp · {p.name}</p>
+            ),
+          )}
           {site.hours && <p>{site.hours.join(" · ")}</p>}
         </address>
       </div>

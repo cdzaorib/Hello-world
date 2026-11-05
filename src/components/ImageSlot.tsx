@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 
-type Props = { src: string | null; alt: string; label: string; className?: string; priority?: boolean; sizes?: string };
+type Props = { src: string | null; alt: string; label: string; className?: string; priority?: boolean; sizes?: string; position?: string };
 
 /** Foto oficial quando `src` existir (em /public/images); senão, placeholder identificado como pendente. */
-export function ImageSlot({ src, alt, label, className = "", priority, sizes = "(min-width: 768px) 50vw, 100vw" }: Props) {
+export function ImageSlot({ src, alt, label, className = "", priority, sizes = "(min-width: 768px) 50vw, 100vw", position = "object-center" }: Props) {
   if (src) {
     return (
       <div className={`relative overflow-hidden ${className}`}>
-        <Image src={src} alt={alt} fill priority={priority} sizes={sizes} className="object-cover" />
+        <Image src={src} alt={alt} fill priority={priority} sizes={sizes} className={`object-cover ${position}`} />
       </div>
     );
   }

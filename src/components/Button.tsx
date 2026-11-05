@@ -7,7 +7,7 @@ type Props = {
   className?: string;
   external?: boolean;
   /** Evento de mensuração (ver ClickTracker). */
-  track?: { name: string; location?: string; specialty?: string };
+  track?: { name: string; location?: string };
 };
 
 const variants = {
@@ -23,7 +23,7 @@ export function Button({ href, variant = "primary", children, className = "", ex
       className={`inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition duration-300 active:scale-[.98] ${variants[variant]} ${className}`}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       {...(track
-        ? { "data-track": track.name, "data-track-location": track.location, "data-track-specialty": track.specialty }
+        ? { "data-track": track.name, "data-track-location": track.location }
         : {})}
     >
       {children}

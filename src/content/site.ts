@@ -13,8 +13,10 @@ export const site = {
     handle: "@conceito.saudeestetica",
     url: "https://www.instagram.com/conceito.saudeestetica/",
   },
-  /** Somente dígitos com DDI+DDD, ex.: "5521999999999". PENDENTE. */
+  /** Somente dígitos com DDI+DDD, ex.: "5521999999999". PENDENTE.
+   *  Os procedimentos usam o WhatsApp de cada profissional (professionals.ts). */
   whatsappNumber: null as string | null,
+  /** WhatsApp geral da clínica (header, hero, botão flutuante, CTA final). PENDENTE. */
   whatsappMessage:
     "Olá! Conheci a Conceito Saúde Estética pelo site e gostaria de saber mais sobre uma avaliação.",
   /** Confirmado pelo perfil do Instagram (localização das publicações). */
@@ -41,8 +43,11 @@ export const hero = {
     "Descubra uma nova forma de cuidar de você, unindo estética avançada e saúde integrativa em uma experiência de atendimento personalizada.",
   primaryCta: "Quero agendar minha avaliação",
   secondaryCta: "Conheça nossas especialidades",
-  /** PENDENTE: foto oficial em /public/images. */
-  image: { src: null as string | null, alt: "Profissionais da Conceito Saúde Estética Integrativa", label: "Foto oficial das profissionais" },
+  image: {
+    src: "/images/hero-profissionais.jpg" as string | null,
+    alt: "Claudia Marques e Munique Cabral, profissionais da Conceito Saúde Estética Integrativa",
+    label: "Foto oficial das profissionais",
+  },
 } as const;
 
 export const essence = {
@@ -64,3 +69,10 @@ export const finalCta = {
   subtitle: "Entre em contato com nossa equipe e conheça as possibilidades de atendimento.",
   button: "Agendar minha avaliação",
 } as const;
+
+/** Mensagens de agendamento enviadas às profissionais. */
+export const procedureMessage = (professional: string, procedure: string) =>
+  `Olá! Conheci a Conceito Saúde Estética pelo site e gostaria de agendar uma avaliação com ${professional} para o procedimento de ${procedure}. Poderiam me informar sobre a disponibilidade?`;
+
+export const professionalMessage = (professional: string) =>
+  `Olá! Conheci a Conceito Saúde Estética pelo site e gostaria de agendar uma avaliação com ${professional}. Poderiam me informar sobre a disponibilidade?`;
