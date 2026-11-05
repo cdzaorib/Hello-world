@@ -32,7 +32,7 @@ export function Hero() {
           <motion.p {...item(4)} className="mt-6 text-sm text-graphite/60">{site.location.neighborhood}, {site.location.city}</motion.p>
         </div>
         <motion.div {...item(2)} className="md:col-span-5">
-          <ImageSlot {...hero.image} position="object-top" priority sizes="(min-width: 768px) 40vw, 100vw" className="aspect-[4/5] rounded-t-[50%/40%] rounded-b-2xl" />
+          <ImageSlot {...hero.image} position="object-top" priority sizes="(min-width: 768px) 40vw, 100vw" className="aspect-[4/5] arch-4-5" />
         </motion.div>
       </div>
     </section>

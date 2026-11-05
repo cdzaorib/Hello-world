@@ -12,7 +12,7 @@ export function Essence() {
       <div className="container-x relative grid items-center gap-14 md:grid-cols-2 md:gap-20">
         <Reveal className="grid grid-cols-5 gap-4">
           <ImageSlot {...a} className="col-span-3 aspect-[3/4] rounded-2xl" sizes="30vw" />
-          <ImageSlot {...b} className="col-span-2 mt-12 aspect-[2/3] rounded-t-[50%/33.333%] rounded-b-2xl" sizes="20vw" />
+          <ImageSlot {...b} className="col-span-2 mt-12 aspect-[2/3] arch-2-3" sizes="20vw" />
         </Reveal>
         <Reveal delay={0.1}>
           <SectionHeading id="ess-title" eyebrow={essence.eyebrow} title={essence.title} />

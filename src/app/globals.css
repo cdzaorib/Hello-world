@@ -26,3 +26,7 @@ body { background: var(--color-cream); color: var(--color-graphite); font-family
 
 .container-x { margin-inline: auto; width: 100%; max-width: 72rem; padding-inline: 1.25rem; }
 @media (min-width: 768px) { .container-x { padding-inline: 2rem; } }
+
+/* Arcos: raio superior = metade da largura (vertical em % da altura, conforme a proporção). */
+.arch-4-5 { border-radius: 50% 50% 1rem 1rem / 40% 40% 1rem 1rem; }
+.arch-2-3 { border-radius: 50% 50% 1rem 1rem / 33.333% 33.333% 1rem 1rem; }
