@@ -1,13 +1,12 @@
-import { ClickTracker } from "@/components/ClickTracker";
 import { Essence } from "@/components/Essence";
-import { Experience } from "@/components/Experience";
 import { FinalCta } from "@/components/FinalCta";
+import { FloatingBooking } from "@/components/FloatingBooking";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { Procedures } from "@/components/Procedures";
 import { Professionals } from "@/components/Professionals";
-import { Specialties } from "@/components/Specialties";
-import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { Testimonials } from "@/components/Testimonials";
 
 export default function Home() {
   return (
@@ -15,15 +14,14 @@ export default function Home() {
       <Header />
       <main id="conteudo">
         <Hero />
-        <Specialties />
+        <Procedures />
         <Essence />
         <Professionals />
-        <Experience />
+        <Testimonials />
         <FinalCta />
       </main>
       <Footer />
-      <WhatsAppFloat />
-      <ClickTracker />
+      <FloatingBooking />
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { procedures } from "@/content/procedures";
 import { site } from "@/content/site";
 
 /** Somente dados verificados: campos pendentes são omitidos. */
@@ -19,7 +20,11 @@ export function organizationJsonLd() {
       addressRegion: site.location.state,
       addressCountry: "BR",
     },
-    ...(site.whatsappNumber ? { telephone: `+${site.whatsappNumber}` } : {}),
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Procedimentos",
+      itemListElement: procedures.map((p) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: p.title } })),
+    },
     ...(site.email ? { email: site.email } : {}),
   };
 }
